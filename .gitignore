@@ -1,0 +1,4 @@
+node_modules/
+debug_*.png
+task.json
+.claude/

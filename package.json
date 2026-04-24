@@ -1,0 +1,16 @@
+{
+  "name": "ai-robotics-development-demo",
+  "version": "1.0.0",
+  "description": "EYWA robot za usporedbu cijena guma",
+  "type": "module",
+  "main": "robots/tire_comparator.js",
+  "scripts": {
+    "test": "node robots/tire_comparator.js"
+  },
+  "dependencies": {
+    "eywa-client": "latest",
+    "playwright": "latest"
+  },
+  "author": "",
+  "license": "ISC"
+}

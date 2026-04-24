@@ -1,0 +1,38 @@
+type Mutation {
+  onGitUpdate: STDResult
+    @execute(
+      windows: ["scripts\\setup-windows.bat"],
+      linux: ["./scripts/setup.sh"],
+      macos: ["./scripts/setup.sh"]
+    )
+
+  """
+  Uspoređuje cijene guma na internetu prema dimenzijama i sezonalnosti.
+  Dimenzije se unose u standardnom formatu (npr. 205/55R16).
+  """
+  compareTirePrices(
+    width: Int = 205
+    @label(value: "Širina (mm)")
+
+    profile: Int = 55
+    @label(value: "Profil (%)")
+
+    rim: Int = 16
+    @label(value: "Felga (inch)")
+
+    season: String = "summer"
+    @label(value: "Sezona (summer / winter / allseason)")
+
+    maxResults: Int = 10
+    @label(value: "Maks. rezultata po sajtu")
+  ): STDResult
+  @robot(
+    euuid: "a1b2c3d4-e5f6-7890-abcd-ef1234567890"
+    name: "Usporedba cijena guma"
+    task_message: "Tražim {{width}}/{{profile}}R{{rim}} ({{season}}) gume..."
+  )
+  @form_input
+  @execute(commands: [
+    "node robots/tire_comparator.js"
+  ])
+}
