@@ -33,7 +33,7 @@ type Mutation {
   )
   @form_input
   @execute(commands: [
-    "node robots/tire_comparator.js"
+    "node robots/tire_comparator.mjs"
   ])
 
   """
@@ -57,7 +57,7 @@ type Mutation {
   )
   @form_input
   @execute(commands: [
-    "node robots/weather_forecast.js"
+    "node robots/weather_forecast.mjs"
   ])
 
   """
@@ -78,6 +78,6 @@ type Mutation {
   )
   @form_input
   @execute(commands: [
-    "node robots/crypto_prices.js"
+    "node robots/crypto_prices.mjs"
   ])
 }
