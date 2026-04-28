@@ -35,4 +35,49 @@ type Mutation {
   @execute(commands: [
     "node robots/tire_comparator.js"
   ])
+
+  """
+  Dohvaća vremensku prognozu za zadani grad koristeći Open-Meteo API.
+  Prikazuje dnevne temperature, padaline i opis vremena.
+  """
+  weatherForecast(
+    city: String = "Zagreb"
+    @label(value: "Grad")
+
+    days: Int = 7
+    @label(value: "Broj dana (1-16)")
+
+    units: String = "celsius"
+    @label(value: "Jedinice (celsius / fahrenheit)")
+  ): STDResult
+  @robot(
+    euuid: "b2c3d4e5-f6a7-8901-bcde-f12345678901"
+    name: "Vremenska prognoza"
+    task_message: "Dohvaćam prognozu za {{city}} ({{days}} dana)..."
+  )
+  @form_input
+  @execute(commands: [
+    "node robots/weather_forecast.js"
+  ])
+
+  """
+  Dohvaća trenutne cijene kriptovaluta s CoinGecko API-ja.
+  Prikazuje cijenu, 24h promjenu i market cap.
+  """
+  cryptoPrices(
+    coins: String = "bitcoin,ethereum,solana"
+    @label(value: "Kriptovalute (odvojene zarezom)")
+
+    currency: String = "eur"
+    @label(value: "Valuta (eur / usd / gbp)")
+  ): STDResult
+  @robot(
+    euuid: "c3d4e5f6-a7b8-9012-cdef-123456789012"
+    name: "Cijene kriptovaluta"
+    task_message: "Dohvaćam cijene: {{coins}} u {{currency}}..."
+  )
+  @form_input
+  @execute(commands: [
+    "node robots/crypto_prices.js"
+  ])
 }
