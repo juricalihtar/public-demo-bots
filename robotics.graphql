@@ -160,4 +160,35 @@ type Mutation {
   @execute(commands: [
     "node robots/cijene_goriva.mjs"
   ])
+
+  """
+  Pretražuje oglase na Njuškalu kroz stvarno web sučelje — otvara stranicu,
+  prihvaća kolačiće, upisuje pojam u tražilicu, postavlja filter cijene
+  i sortiranje te pokupi rezultate.
+  """
+  njuskaloPretraga(
+    pojam: String = "bicikl"
+    @label(value: "Pojam za pretragu")
+
+    cijenaOd: Float
+    @label(value: "Cijena od (€, prazno = bez donje granice)")
+
+    cijenaDo: Float
+    @label(value: "Cijena do (€, prazno = bez gornje granice)")
+
+    sortiraj: String = "najjeftinije"
+    @label(value: "Sortiraj (najjeftinije / najskuplje / najnovije / najstarije / relevantnost)")
+
+    maxResults: Int = 10
+    @label(value: "Maks. rezultata")
+  ): STDResult
+  @robot(
+    euuid: "a7b8c9d0-e1f2-3456-abcd-567890123456"
+    name: "Njuškalo pretraga oglasa"
+    task_message: "Pretražujem Njuškalo za {{pojam}}..."
+  )
+  @form_input
+  @execute(commands: [
+    "node robots/njuskalo_pretraga.mjs"
+  ])
 }
