@@ -191,4 +191,35 @@ type Mutation {
   @execute(commands: [
     "node robots/njuskalo_pretraga.mjs"
   ])
+
+  """
+  Duplikat HP kalkulatora — izračunava cijenu slanja pošiljke putem web
+  sučelja Hrvatske pošte. Otvara browser, odabire vrstu pošiljke, težinu
+  i klikće Izračunaj.
+  """
+  postaKalkulatorNew(
+    promet: String = "unutarnji"
+    @label(value: "Promet (unutarnji / medjunarodni)")
+
+    vrstaPosiljke: String = "pismo"
+    @label(value: "Vrsta (pismo / paket / paket24 / paket24box / dopisnica / prioritetno / preporucena / vrijednosno / tiskanica)")
+
+    tezina: String = "do 50"
+    @label(value: "Težina - odaberi iz liste (npr. 'do 50', '51-100', '0 - 1 kg'...)")
+
+    odrediste: String = ""
+    @label(value: "Odredište za međunarodni promet (npr. NJEMAČKA)")
+
+    preuzimanje: String = ""
+    @label(value: "Preuzimanje za paket (npr. 'u poštanskom uredu' ili 'na adresi')")
+  ): STDResult
+  @robot(
+    euuid: "4ced7393-bbae-4853-800a-98e24be1ce8e"
+    name: "HP Kalkulator cijene slanja NEW"
+    task_message: "Izračunavam cijenu: {{vrstaPosiljke}} ({{promet}}, {{tezina}})..."
+  )
+  @form_input
+  @execute(commands: [
+    "node robots/posta_kalkulator_new.mjs"
+  ])
 }
