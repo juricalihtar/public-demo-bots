@@ -110,4 +110,54 @@ type Mutation {
   @execute(commands: [
     "node robots/crypto_prices.mjs"
   ])
+
+  """
+  Dohvaća službenu tečajnu listu Hrvatske narodne banke (HNB).
+  Prikazuje kupovni, srednji i prodajni tečaj te konverziju zadanog iznosa.
+  Ako je zadan datum, dohvaća povijesnu tečajnicu za taj dan.
+  """
+  hnbTecaj(
+    valute: String = "USD,GBP,CHF"
+    @label(value: "Valute (odvojene zarezom, npr. USD,GBP,CHF)")
+
+    iznos: Float = 100
+    @label(value: "Iznos za konverziju")
+
+    datum: String = ""
+    @label(value: "Datum tečajnice (YYYY-MM-DD, prazno = danas)")
+  ): STDResult
+  @robot(
+    euuid: "e5f6a7b8-c9d0-1234-efab-345678901234"
+    name: "HNB tečajna lista"
+    task_message: "Dohvaćam HNB tečaj za {{valute}}..."
+  )
+  @form_input
+  @execute(commands: [
+    "node robots/hnb_tecaj.mjs"
+  ])
+
+  """
+  Pronalazi najjeftinije cijene goriva u Hrvatskoj iz otvorenog minGO dataseta
+  Ministarstva gospodarstva. Filtrira po vrsti goriva i mjestu te vraća
+  rang listu postaja s najnižom cijenom.
+  """
+  cijeneGoriva(
+    gorivo: String = "Eurodizel"
+    @label(value: "Gorivo (Eurodizel / Eurosuper 95 / Autoplin / boca...)")
+
+    mjesto: String = ""
+    @label(value: "Mjesto (prazno = cijela Hrvatska)")
+
+    maxResults: Int = 10
+    @label(value: "Maks. rezultata")
+  ): STDResult
+  @robot(
+    euuid: "f6a7b8c9-d0e1-2345-fabc-456789012345"
+    name: "Cijene goriva (minGO)"
+    task_message: "Tražim najjeftiniji {{gorivo}} — {{mjesto}}..."
+  )
+  @form_input
+  @execute(commands: [
+    "node robots/cijene_goriva.mjs"
+  ])
 }
